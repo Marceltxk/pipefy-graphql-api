@@ -29,7 +29,7 @@ const resolvers = {
   Mutation: {
     createCard: async (_, { pipeId, title, description }) => {
       // Substitua pelo seu token de acesso
-      const pipefyToken = ' ';
+      const pipefyToken = 'scYK9e7hZcytjGwJzHrW';
 
       // Enviando requisição para a API GraphQL do Pipefy
       try {
@@ -77,9 +77,15 @@ const server = new ApolloServer({
   resolvers,
 });
 
-server.applyMiddleware({ app });
+// Iniciar o servidor Apollo antes de aplicar o middleware
+async function startServer() {
+  await server.start();
+  server.applyMiddleware({ app });
 
-// Iniciando o servidor
-app.listen(4000, () => {
-  console.log('Servidor rodando em http://localhost:4000/graphql');
-});
+  // Iniciando o servidor Express
+  app.listen(4000, () => {
+    console.log('Servidor rodando em http://localhost:4000/graphql');
+  });
+}
+
+startServer();
